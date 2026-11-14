@@ -1,0 +1,7 @@
+# Copy to dataset/data.yaml after defining your own labels.
+path: .
+train: images/train
+val: images/val
+names:
+  0: gesture_class_0
+  1: gesture_class_1

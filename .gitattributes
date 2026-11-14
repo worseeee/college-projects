@@ -1,0 +1,14 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.java text eol=lf
+*.slx binary
+*.SchDoc binary
+*.PcbDoc binary
+*.dwg binary
+*.pkt binary
+*.ms10 binary
+*.pdsprj binary
+*.ico binary

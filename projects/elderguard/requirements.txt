@@ -1,0 +1,7 @@
+# Derived from the published source imports; isolate hardware-specific environments.
+RPi.GPIO
+adafruit-blinka
+adafruit-circuitpython-dht
+dht11
+pyecharts
+requests

@@ -1,0 +1,36 @@
+# 物联网模块 1：ZigBee 组网与采集
+
+ZigBee 组网与采集 的课程实现与操作记录。
+
+**性质**：物联网应用系统分项实验。
+
+## 功能与实现
+
+- ZigBee 组网与采集。
+- 模块 6 的视觉程序和模块 7 的训练脚本分别见 projects/yolo-vision-apps 与 projects/gesture-yolo。
+
+## 目录与入口
+
+- `DESIGN_NOTES.md`
+- `application/DHT11.c`
+- `application/DHT11.h`
+- `application/GenericApp.h`
+- `application/coordinator.c`
+- `application/ds18b20.c`
+- `application/ds18b20.h`
+- `application/enddevice.c`
+
+## 环境与运行
+
+按课程平台/板卡配置操作，当前发布主要保留功能、实验方法和应用层说明。 固件需 IAR 与 TI Z-Stack 环境。
+
+## 验证范围与复现说明
+
+- 云平台和邮箱授权信息在发布副本中已替换；必须使用自己的产品、设备和凭据。
+- 平台截图、调试账号、个人文档与课程安装包不发布。
+
+## 资料与来源
+
+保留源码中的课程、厂商与开源来源标注。依赖与权重按各自许可另行获取。
+
+[返回项目总览](../../../README.md)

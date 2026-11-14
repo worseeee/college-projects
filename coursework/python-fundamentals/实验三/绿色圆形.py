@@ -1,0 +1,10 @@
+from turtle import *
+setup(1000,1000)
+color('green','green')
+begin_fill()
+circle(200)
+end_fill()
+penup()
+goto(-40,-50)
+pendown()
+write('绿色圆形',font=('Arial',20,'normal'))

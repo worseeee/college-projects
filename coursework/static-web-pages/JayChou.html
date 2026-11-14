@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周杰伦 Jay Chou | 个人简介</title>
+    <style>
+        /* ================= 基础变量与重置 ================= */
+        :root {
+            --bg-color: #0d0d0d;
+            --bg-light: #1a1a1a;
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1a6;
+            --accent-gold: #d4af37;
+            --accent-hover: #f3c623;
+            --font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* ================= 动画与交互 ================= */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= 导航栏 ================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ================= 首页横幅区 ================= */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            /* 使用 CSS 渐变模拟黑金演唱会氛围，若有真实图片可替换 background-image URL */
+            background: linear-gradient(to bottom, rgba(13, 13, 13, 0.3), rgba(13, 13, 13, 1)),
+                        radial-gradient(circle at center, #2a2a2a 0%, #0d0d0d 100%);
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* ================= 通用区段样式 ================= */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* ================= 个人简介区 ================= */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background-image: url('Jay.jpg'); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-image::before {
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: #ccc;
+            text-align: justify;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background: var(--accent-gold);
+            color: var(--bg-color);
+        }
+
+        /* ================= 代表作品区 ================= */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .work-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .work-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+        }
+
+        .work-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ================= 生平时间线区 ================= */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            width: 80%;
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 2rem;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 2rem;
+            text-align: left;
+        }
+
+        .timeline-content:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-gold);
+            z-index: 2;
+        }
+
+        .year {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ================= 底部版权区 ================= */
+        footer {
+            background: #050505;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-gold);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #555;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 2rem;
+        }
+
+        /* ================= 响应式设计 ================= */
+        @media (max-width: 768px) {
+            .nav-links { display: none; /* 移动端简易处理，隐藏导航链接 */ }
+            .hero h1 { font-size: 3rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            
+            .timeline::before { left: 30px; }
+            .timeline-item, .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 60px;
+                padding-right: 0;
+            }
+            .timeline-dot { left: 30px; }
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin: 0;
+                text-align: left;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JAY CHOU</div>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#about">关于</a>
+                <a href="#works">作品</a>
+                <a href="#timeline">历程</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-content fade-in">
+            <h1>周杰伦</h1>
+            <p>华语流行乐男歌手 · 音乐人 · 演员 · 导演</p>
+        </div>
+        <div class="scroll-down">↓</div>
+    </header>
+
+    <section id="about">
+        <h2 class="section-title fade-in">关于杰伦</h2>
+        <div class="about-grid">
+            <div class="about-image fade-in">
+                </div>
+            <div class="about-text fade-in">
+                <p>周杰伦（Jay Chou），1979年1月18日出生于台湾省新北市，华语流行乐男歌手、音乐人、演员、导演、编剧，毕业于淡江中学。</p>
+                <p>2000年发行首张个人专辑《Jay》，开启了华语乐坛的新纪元。他将中西音乐元素巧妙融合，开创了独特的“中国风”流行音乐，对华语乐坛产生了深远影响。</p>
+                <p>除了在音乐领域斩获十五座金曲奖外，他更跨界电影，执导并主演了《不能说的秘密》，参演好莱坞电影《青蜂侠》，展现了全方位的艺术才华。</p>
+                <div class="tags">
+                    <span class="tag">中国风</span>
+                    <span class="tag">R&B</span>
+                    <span class="tag">流行摇滚</span>
+                    <span class="tag">古典跨界</span>
+                    <span class="tag">时代标志</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="works">
+        <h2 class="section-title fade-in">经典回响</h2>
+        <div class="works-grid">
+            <div class="work-card fade-in">
+                <div class="work-icon">♫</div>
+                <h3 class="work-title">《七里香》</h3>
+                <p class="work-desc">夏天的风与诗意交织，华语流行音乐的浪漫极致，席卷全亚洲的经典之作。</p>
+            </div>
+            <div class="work-card fade-in">
+                <div class="work-icon">◭</div>
+                <h3 class="work-title">《青花瓷》</h3>
+                <p class="work-desc">天青色等烟雨，绝美填词与优美旋律结合，开创“中国风”音乐巅峰。</p>
+            </div>
+            <div class="work-card fade-in">
+                <div class="work-icon">⚔</div>
+                <h3 class="work-title">《双截棍》</h3>
+                <p class="work-desc">硬核说唱与中国武术文化的碰撞，颠覆了大众对流行音乐的传统认知。</p>
+            </div>
+            <div class="work-card fade-in">
+                <div class="work-icon">☾</div>
+                <h3 class="work-title">《夜曲》</h3>
+                <p class="work-desc">为你弹奏肖邦的夜曲，古典吉他与Hip-Hop完美融合，横扫各大音乐奖项。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline">
+        <h2 class="section-title fade-in">艺术轨迹</h2>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">2000</div>
+                    <h3>首张专辑《Jay》</h3>
+                    <p>正式出道，凭借该专辑包揽当年金曲奖最佳流行音乐演唱专辑奖。</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">2001</div>
+                    <h3>神作《范特西》</h3>
+                    <p>发行第二张专辑，奠定其在华语乐坛的天王地位，横扫金曲奖五项大奖。</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">2005</div>
+                    <h3>进军影坛《头文字D》</h3>
+                    <p>首次主演电影，荣获金马奖及金像奖最佳新演员奖。</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">2007</div>
+                    <h3>自导自演《不能说的秘密》</h3>
+                    <p>展现导演才华，电影及原声带均大获成功，斩获金马奖三项大奖。</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">2022</div>
+                    <h3>《最伟大的作品》</h3>
+                    <p>时隔六年发行专辑，首日销售额破亿，荣登IFPI全球艺人榜及专辑榜榜首。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content fade-in">
+            <div class="footer-logo">JAY CHOU</div>
+            <p class="footer-text">无与伦比，为杰沉沦。<br>致敬华语流行乐坛跨时代的传奇。</p>
+            <div class="social-links">
+                <a href="javascript:void(0)" title="Instagram">IG</a>
+                <a href="javascript:void(0)" title="YouTube">YT</a>
+                <a href="javascript:void(0)" title="Spotify">SP</a>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Designed for Jay Chou Fan Page. Pure HTML/CSS/JS Demo.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 滚动时导航栏背景变色
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(13, 13, 13, 0.95)';
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.5)';
+            } else {
+                navbar.style.background = 'rgba(13, 13, 13, 0.85)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // 元素进入视口时的淡入动画 (Intersection Observer)
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+</body>
+</html>

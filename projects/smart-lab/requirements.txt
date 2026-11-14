@@ -1,0 +1,3 @@
+# Derived from the published source imports; isolate hardware-specific environments.
+pygame
+pyserial

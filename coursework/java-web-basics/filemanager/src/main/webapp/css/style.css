@@ -1,0 +1,119 @@
+/* 全局样式 */
+body {
+    background-color: #f0f2f5;
+    font-family: 'Microsoft YaHei', sans-serif;
+    margin: 0;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* 核心容器 */
+.container {
+    width: 800px;
+    background-color: #e5e5e5;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 白色卡片区域 */
+.card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* 表单组样式 */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.form-group label {
+    width: 80px;
+    color: #555;
+    font-size: 14px;
+}
+.form-control {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border 0.3s;
+}
+.form-control:focus {
+    border-color: #28a745;
+}
+
+/* 按钮样式 */
+.btn-upload {
+    width: 100%;
+    background-color: #17a2b8; /* 默认青蓝色 */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+.btn-upload:hover {
+    background-color: #138496;
+}
+
+.btn-success {
+    background-color: #28a745; /* 图中同款绿色 */
+    color: white;
+}
+.btn-success:hover { background-color: #218838; }
+
+/* 结果提示框 */
+.alert-success { color: #155724; background-color: #d4edda; padding: 15px; border-radius: 4px; text-align: center; }
+.alert-error { color: #721c24; background-color: #f8d7da; padding: 15px; border-radius: 4px; text-align: center; }
+
+/* 表格样式 */
+.file-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.file-table th, .file-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+.file-table th {
+    background-color: #f8f9fa;
+    color: #333;
+}
+.file-table tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* 下载超链接装饰 */
+.download-link {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: 0.3s;
+}
+.download-link:hover {
+    background-color: #218838;
+}

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浙江万里学院图书销售管理系统</title>
+    <style>
+        /* ================= 基础重置与传统办公风格变量 ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: "Microsoft YaHei", "微软雅黑", "SimSun", "宋体", sans-serif;
+            background-color: #d1e3e6; 
+            color: #333333;
+            overflow: hidden;
+        }
+
+        /* ================= 页面整体布局 ================= */
+        .system-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* 顶部系统名称栏 */
+        .system-header {
+            background-color: #b0cacc; 
+            padding: 15px 20px;
+            border-bottom: 2px solid #99b6b8;
+        }
+
+        .system-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2b4c50;
+            letter-spacing: 1px;
+        }
+
+        /* 主体内容区（左右分栏） */
+        .system-body {
+            display: flex;
+            flex: 1;
+            height: calc(100% - 54px);
+        }
+
+        /* ================= 左侧固定垂直导航栏 ================= */
+        .sidebar {
+            width: 240px;
+            background-color: #bacdc2; 
+            border-right: 1px solid #9cb0a5;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* 欢迎提示区/高亮项 */
+        .welcome-block {
+            background-color: #5b74a8; 
+            color: #ffffff;
+            padding: 12px 15px;
+            font-size: 13px;
+            border-bottom: 1px solid #4a6190;
+        }
+
+        /* 菜单分组 */
+        .menu-group {
+            border-bottom: 1px solid #9cb0a5;
+        }
+
+        .menu-group-title {
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #44554d;
+            background-color: #b2c4ba;
+        }
+
+        /* 菜单列表与细线分隔 */
+        .menu-items {
+            list-style: none;
+        }
+
+        .menu-item {
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-item a {
+            display: block;
+            padding: 10px 25px;
+            font-size: 13px;
+            color: #3b5998; /* 图中偏蓝色的文字链接 */
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        /* 鼠标悬停与激活状态 */
+        .menu-item a:hover {
+            background-color: #a3b7ae;
+            color: #1a305e;
+        }
+
+        .menu-item.active {
+            background-color: #9cb0a5;
+        }
+        .menu-item.active a {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        /* ================= 右侧主要内容工作区 ================= */
+        .main-content {
+            flex: 1;
+            background-color: #d1e3e6; 
+            padding: 30px 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 当前位置提示 */
+        .current-location {
+            font-size: 14px;
+            color: #556666;
+            margin-bottom: 30px;
+        }
+
+        /* 数据工作区块 */
+        .content-section {
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        /* 板块标题 */
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2b4c50;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(43, 76, 80, 0.2);
+            padding-bottom: 5px;
+        }
+
+        /* 传统列表样式 */
+        .data-list {
+            list-style: none;
+            padding-left: 5px;
+        }
+
+        .data-list li {
+            font-size: 14px;
+            color: #445557;
+            padding: 8px 0;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .data-list li:hover {
+            color: #1a305e;
+            text-decoration: underline;
+        }
+
+        /* 隐藏的内容区域，用于JS切换联动 */
+        .dynamic-panel {
+            display: none;
+        }
+        
+        .dynamic-panel.active-panel {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="system-container">
+        <header class="system-header">
+            <div class="system-title">XXXX公司图书销售管理系统</div>
+        </header>
+
+        <div class="system-body">
+            <aside class="sidebar">
+                <div class="welcome-block">欢迎使用系统后台管理功能</div>
+                
+                <div class="menu-group">
+                    <div class="menu-group-title">· 图书基本信息管理</div>
+                    <ul class="menu-items">
+                        <li class="menu-item active" data-target="home-panel"><a href="javascript:void(0);">图书信息管理首页</a></li>
+                        <li class="menu-item" data-target="browse-panel"><a href="javascript:void(0);">图书信息浏览</a></li>
+                        <li class="menu-item" data-target="add-panel"><a href="javascript:void(0);">增加图书信息</a></li>
+                        <li class="menu-item" data-target="query-panel"><a href="javascript:void(0);">图书高级检索</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <div class="menu-group-title">· 图书订单管理</div>
+                    <ul class="menu-items">
+                        <li class="menu-item" data-target="order-all"><a href="javascript:void(0);">所有订单信息浏览</a></li>
+                        <li class="menu-item" data-target="order-bulk"><a href="javascript:void(0);">大宗图书订单管理</a></li>
+                        <li class="menu-item" data-target="agent-manage"><a href="javascript:void(0);">代理商管理</a></li>
+                        <li class="menu-item" data-target="order-chart"><a href="javascript:void(0);">订单统计报表</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <div class="menu-group-title">· 图书品类管理</div>
+                    <ul class="menu-items">
+                        <li class="menu-item" data-target="category-browse"><a href="javascript:void(0);">图书品类浏览</a></li>
+                        <li class="menu-item" data-target="category-add"><a href="javascript:void(0);">增加图书品类</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <div class="menu-group-title">· 图书库存管理</div>
+                    <ul class="menu-items">
+                        <li class="menu-item" data-target="stock-query"><a href="javascript:void(0);">库存查询</a></li>
+                        <li class="menu-item" data-target="stock-io"><a href="javascript:void(0);">出入库管理</a></li>
+                        <li class="menu-item" data-target="stock-chart"><a href="javascript:void(0);">库存统计报表</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-group">
+                    <div class="menu-group-title">· 出版商管理</div>
+                    <ul class="menu-items">
+                        <li class="menu-item" data-target="press-browse"><a href="javascript:void(0);">出版商信息浏览</a></li>
+                        <li class="menu-item" data-target="press-add"><a href="javascript:void(0);">增加出版商信息</a></li>
+                        <li class="menu-item" data-target="press-contract"><a href="javascript:void(0);">出版商合同管理</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                
+                <div id="home-panel" class="dynamic-panel active-panel">
+                    <div class="current-location">当前位置：工作区域</div>
+
+                    <section class="content-section">
+                        <h2 class="section-title">通知公告</h2>
+                        <ul class="data-list">
+                            <li>公告1：关于2026年第二季度图书库存盘点的通知</li>
+                            <li>公告2：系统计划于本周五凌晨进行数据库常规维护</li>
+                            <li>公告3：新版代理商合作协议签约流程变更说明</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-section">
+                        <h2 class="section-title">我的待办</h2>
+                        <ul class="data-list">
+                            <li>待办1：审批来自北京朝阳区代理商的大宗采购订单</li>
+                            <li>待办2：录入《物联网服务器软件集成实践》新书入库数据</li>
+                            <li>待办3：处理3笔出版社退货异常申请单</li>
+                        </ul>
+                    </section>
+
+                    <section class="content-section">
+                        <h2 class="section-title">我的消息</h2>
+                        <ul class="data-list">
+                            <li>消息1：您有一笔新的待办采购单已通过初审</li>
+                            <li>消息2：系统管理员已重置您的部分高级检索权限</li>
+                            <li>消息3：库存预警：少儿科普类图书库存量已低于安全水位</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <div id="generic-panel" class="dynamic-panel">
+                    <div class="current-location">当前位置：<span id="location-path">业务管理</span></div>
+                    <section class="content-section">
+                        <h2 class="section-title" id="panel-title">功能加载中</h2>
+                        <p style="font-size: 14px; color: #556666; margin-top: 10px;">
+                            该模块正在连接企业内部局域网服务器，请稍候...
+                        </p>
+                        <ul class="data-list" style="margin-top: 20px;">
+                            <li>暂无相关历史流水记录</li>
+                            <li>请使用上方检索条件过滤目标数据</li>
+                        </ul>
+                    </section>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            const homePanel = document.getElementById('home-panel');
+            const genericPanel = document.getElementById('generic-panel');
+            const locationPath = document.getElementById('location-path');
+            const panelTitle = document.getElementById('panel-title');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 1. 移除所有菜单的高亮状态
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    
+                    // 2. 为当前点击的菜单添加高亮
+                    this.classList.add('active');
+
+                    // 3. 获取对应目标与文案
+                    const target = this.getAttribute('data-target');
+                    const menuText = this.querySelector('a').innerText;
+                    const groupText = this.closest('.menu-group').querySelector('.menu-group-title').innerText.replace('· ', '');
+
+                    // 4. 传统路由联动切换逻辑
+                    if (target === 'home-panel') {
+                        genericPanel.classList.remove('active-panel');
+                        homePanel.classList.add('active-panel');
+                    } else {
+                        homePanel.classList.remove('active-panel');
+                        genericPanel.classList.add('active-panel');
+                        
+                        // 动态修改面包屑和标题内容
+                        locationPath.innerText = groupText + ' > ' + menuText;
+                        panelTitle.innerText = menuText;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

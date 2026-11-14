@@ -1,0 +1,4 @@
+# Derived from the published source imports; isolate hardware-specific environments.
+paho-mqtt
+pyserial
+requests

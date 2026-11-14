@@ -1,0 +1,7 @@
+# Derived from the published source imports; isolate hardware-specific environments.
+Pillow
+ollama
+opencv-python>=4.8,<5
+paho-mqtt
+pyserial
+ultralytics

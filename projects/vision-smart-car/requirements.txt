@@ -1,0 +1,5 @@
+# Derived from the published source imports; isolate hardware-specific environments.
+Adafruit-PCA9685
+RPi.GPIO
+numpy
+opencv-python>=4.8,<5

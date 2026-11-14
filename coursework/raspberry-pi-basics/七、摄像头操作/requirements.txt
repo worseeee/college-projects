@@ -1,0 +1,4 @@
+# Derived from the published source imports; isolate hardware-specific environments.
+numpy
+opencv-python>=4.8,<5
+pycryptodome

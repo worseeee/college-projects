@@ -1,0 +1,9 @@
+# Derived from the published source imports; isolate hardware-specific environments.
+Pillow
+numpy
+opencv-python>=4.8,<5
+paho-mqtt
+pyserial
+requests
+torch
+ultralytics

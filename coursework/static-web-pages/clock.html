@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡通小熊实时时钟</title>
+    <style>
+        /* ==================== 基础变量与主题 ==================== */
+        :root {
+            /* 白天主题颜色 */
+            --sky-bg-top: #87CEEB;
+            --sky-bg-bottom: #E0F6FF;
+            --clock-face: #FFE4B5;      /* 小熊脸庞颜色 */
+            --clock-border: #8B4513;    /* 轮廓描边颜色 */
+            --ear-color: #DEB887;       /* 耳朵颜色 */
+            --text-color: #5C4033;      /* 数字与文字颜色 */
+            --hand-hour: #5C4033;       /* 时针颜色 */
+            --hand-minute: #FF8C00;     /* 分针颜色 */
+            --hand-second: #FF4500;     /* 秒针颜色 */
+            --cloud-color: #FFFFFF;     /* 云朵颜色 */
+        }
+
+        /* 黑夜主题颜色 (点击表盘后切换) */
+        body.night-theme {
+            --sky-bg-top: #191970;
+            --sky-bg-bottom: #4B0082;
+            --clock-face: #E6E6FA;
+            --clock-border: #2F4F4F;
+            --ear-color: #B0C4DE;
+            --text-color: #E6E6FA;
+            --cloud-color: #A9A9A9;
+        }
+
+        /* ==================== 全局重置与排版 ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, var(--sky-bg-top), var(--sky-bg-bottom));
+            font-family: 'Comic Sans MS', 'Fredoka One', 'Nunito', 'Microsoft YaHei', cursive, sans-serif;
+            overflow: hidden;
+            transition: background 0.8s ease;
+        }
+
+        /* ==================== 装饰性云朵动画 ==================== */
+        .clouds {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            pointer-events: none; /* 避免遮挡鼠标点击事件 */
+        }
+
+        .cloud {
+            position: absolute;
+            background: var(--cloud-color);
+            border-radius: 50px;
+            opacity: 0.8;
+            transition: background 0.8s ease;
+            animation: float 25s linear infinite;
+        }
+
+        /* 云朵伪元素（制造云朵的蓬松感） */
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: var(--cloud-color);
+            border-radius: 50%;
+            transition: background 0.8s ease;
+        }
+
+        .cloud1 { width: 120px; height: 40px; top: 15%; left: -150px; animation-duration: 35s; }
+        .cloud1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+        .cloud1::after { width: 70px; height: 70px; top: -35px; right: 15px; }
+
+        .cloud2 { width: 100px; height: 30px; top: 40%; left: -120px; animation-duration: 25s; animation-delay: 10s; }
+        .cloud2::before { width: 40px; height: 40px; top: -20px; left: 10px; }
+        .cloud2::after { width: 50px; height: 50px; top: -25px; right: 15px; }
+
+        .cloud3 { width: 150px; height: 50px; top: 70%; left: -200px; animation-duration: 40s; animation-delay: 5s; }
+        .cloud3::before { width: 60px; height: 60px; top: -30px; left: 20px; }
+        .cloud3::after { width: 80px; height: 80px; top: -40px; right: 25px; }
+
+        @keyframes float {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(120vw); }
+        }
+
+        /* ==================== 顶部问候语 ==================== */
+        .greeting {
+            z-index: 10;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+            font-weight: bold;
+            transition: color 0.8s ease;
+            text-align: center;
+        }
+
+        /* ==================== 时钟主体部分 ==================== */
+        .clock-wrapper {
+            position: relative;
+            z-index: 10;
+            /* 添加有趣的弹性缩放过渡动画 */
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .clock-wrapper:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .clock-face {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background: var(--clock-face);
+            border: 12px solid var(--clock-border);
+            border-radius: 50%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2), inset 0 -10px 20px rgba(0,0,0,0.1);
+            transition: background 0.8s ease, border-color 0.8s ease;
+        }
+
+        /* 小熊耳朵 */
+        .ear {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: var(--ear-color);
+            border: 10px solid var(--clock-border);
+            border-radius: 50%;
+            z-index: -1;
+            transition: all 0.8s ease;
+        }
+        .ear.left { top: -20px; left: -15px; }
+        .ear.right { top: -20px; right: -15px; }
+
+        /* 小熊口鼻 */
+        .snout {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 60px;
+            background: #FFF8DC;
+            border: 4px solid var(--clock-border);
+            border-radius: 50%;
+            z-index: 1; /* 在表盘之上，指针之下 */
+        }
+        .nose {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 15px;
+            background: var(--clock-border);
+            border-radius: 50%;
+        }
+
+        /* ==================== 表盘数字与刻度 ==================== */
+        .number {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-color);
+            /* 居中偏移由 JavaScript 计算时统一处理 */
+            transition: color 0.8s ease;
+        }
+
+        /* ==================== 指针系统 ==================== */
+        .hand {
+            position: absolute;
+            bottom: 50%;    /* 底部固定在表盘正中心 */
+            left: 50%;
+            /* 旋转基准点设置为指针的最底部中心 */
+            transform-origin: 50% 100%;
+            border-radius: 10px;
+            z-index: 5;
+            transition: background 0.8s ease;
+        }
+
+        .hour-hand {
+            width: 10px;
+            height: 25%;    /* 时针最短 */
+            background: var(--hand-hour);
+            margin-left: -5px; /* 居中校准 */
+        }
+
+        .minute-hand {
+            width: 8px;
+            height: 35%;    /* 分针中等 */
+            background: var(--hand-minute);
+            margin-left: -4px;
+        }
+
+        .second-hand {
+            width: 4px;
+            height: 42%;    /* 秒针最长 */
+            background: var(--hand-second);
+            margin-left: -2px;
+            z-index: 6;     /* 秒针在最顶层 */
+            /* 增加一点小尾巴 */
+            transform-origin: 50% 80%;
+            bottom: 40%;
+        }
+
+        /* 秒针顶部的圆点装饰 */
+        .second-hand::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -4px;
+            width: 12px;
+            height: 12px;
+            background: var(--hand-second);
+            border-radius: 50%;
+        }
+
+        /* 表盘正中心的固定红点 */
+        .center-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: var(--hand-second);
+            border-radius: 50%;
+            border: 3px solid #FFF;
+            z-index: 10;
+        }
+
+        /* ==================== 底部数字时间 ==================== */
+        .digital-display {
+            z-index: 10;
+            margin-top: 40px;
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 4px solid var(--clock-border);
+            border-radius: 30px;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.8s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="clouds">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+    </div>
+
+    <div class="greeting">Hi 胜炜！今天心情怎么样？注意时间，向 考研 的目标稳步冲刺！</div>
+
+    <div class="clock-wrapper" id="clockWrapper" title="点我切换日夜主题哦！">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+        
+        <div class="clock-face" id="clockFace">
+            <div class="snout"><div class="nose"></div></div>
+            
+            <div class="hand hour-hand" id="hourHand"></div>
+            <div class="hand minute-hand" id="minuteHand"></div>
+            <div class="hand second-hand" id="secondHand"></div>
+            
+            <div class="center-dot"></div>
+            </div>
+    </div>
+
+    <div class="digital-display" id="digitalTime">12:00:00 AM</div>
+
+    <script>
+        /**
+         * 动态生成表盘上的 1~12 个数字刻度
+         */
+        function createClockNumbers() {
+            const clockFace = document.getElementById('clockFace');
+            const radius = 40; // 数字距离中心的百分比半径 (0~50%)
+
+            for (let i = 1; i <= 12; i++) {
+                const numberDiv = document.createElement('div');
+                numberDiv.className = 'number';
+                numberDiv.innerText = i;
+
+                // 计算角度：12点钟方向为 0 度，也就是对应数学上的 -90 度
+                // 每个小时相差 360/12 = 30 度
+                const angle = (i * 30 - 90) * (Math.PI / 180);
+                
+                // 将极坐标转换为直角坐标 (X, Y)
+                const x = 50 + radius * Math.cos(angle);
+                const y = 50 + radius * Math.sin(angle);
+
+                numberDiv.style.left = `${x}%`;
+                numberDiv.style.top = `${y}%`;
+                // 使用 translate 使数字自身的中心点对准计算出的坐标
+                numberDiv.style.transform = 'translate(-50%, -50%)';
+
+                clockFace.appendChild(numberDiv);
+            }
+        }
+
+        /**
+         * 核心函数：实时更新模拟指针角度与数字时间
+         */
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+
+            // 1. 获取 DOM 元素
+            const hourHand = document.getElementById('hourHand');
+            const minuteHand = document.getElementById('minuteHand');
+            const secondHand = document.getElementById('secondHand');
+            const digitalTime = document.getElementById('digitalTime');
+
+            // 2. 计算指针旋转角度
+            // 毫秒级计算让秒针可以做到极其平滑的移动 (如果不想要平滑，可去掉 milliseconds 的换算)
+            const secAngle = (seconds + milliseconds / 1000) * 6; // 一秒 6 度
+            const minAngle = (minutes + seconds / 60) * 6;        // 一分 6 度，加上秒钟产生的偏移
+            const hourAngle = ((hours % 12) + minutes / 60) * 30; // 一小时 30 度，加上分钟产生的偏移
+
+            // 3. 应用 CSS 旋转
+            secondHand.style.transform = `rotate(${secAngle}deg)`;
+            minuteHand.style.transform = `rotate(${minAngle}deg)`;
+            hourHand.style.transform = `rotate(${hourAngle}deg)`;
+
+            // 4. 更新数字时间显示
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 === 0 ? 12 : hours % 12; // 12小时制转换
+            
+            // 补零操作，确保 HH:MM:SS 格式对齐
+            const padHours = String(displayHours).padStart(2, '0');
+            const padMinutes = String(minutes).padStart(2, '0');
+            const padSeconds = String(seconds).padStart(2, '0');
+
+            digitalTime.innerText = `${padHours}:${padMinutes}:${padSeconds} ${ampm}`;
+            
+            // 使用 requestAnimationFrame 递归调用，比 setInterval 更流畅省电
+            requestAnimationFrame(updateClock);
+        }
+
+        /**
+         * 交互效果：点击时钟区域切换主题
+         */
+        function setupInteraction() {
+            const wrapper = document.getElementById('clockWrapper');
+            wrapper.addEventListener('click', () => {
+                document.body.classList.toggle('night-theme');
+            });
+        }
+
+        // 初始化执行
+        createClockNumbers();
+        updateClock();  // 开始时间循环
+        setupInteraction();
+
+    </script>
+</body>
+</html>

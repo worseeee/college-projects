@@ -1,0 +1,273 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+#include "verrsrc.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "#include ""verrsrc.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#include ""res\\TrapDemoMFC.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""l.CHS\\afxres.rc""      // 标准组件\r\n"
+    "#if !defined(_AFXDLL)\r\n"
+    "#include ""l.CHS\\afxribbon.rc""   // MFC 功能区和控制条资源\r\n"
+    "#endif\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\TrapDemoMFC.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 TrapDemoMFC"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "TrapDemoMFC，版本 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2026",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_TRAPDEMOMFC_DIALOG DIALOGEX 0, 0, 557, 281
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "初始化控制器",IDC_BTN_INIT,392,15,50,14
+    PUSHBUTTON      "伺服使能",IDC_BTN_ENABLE,280,161,50,14
+    PUSHBUTTON      "单轴点位运动",IDC_BTN_MOVE,26,70,50,14
+    PUSHBUTTON      "三轴依次运动",IDC_BTN_SEQUENCE,26,87,50,14
+    PUSHBUTTON      "<<负向JOG",IDC_BTN_JOG_NEG,23,127,50,22
+    PUSHBUTTON      "正向JOG>>",IDC_BTN_JOG_POS,78,127,50,22
+    PUSHBUTTON      "平滑停止",IDC_BTN_STOP,385,161,50,14
+    PUSHBUTTON      "伺服关闭",IDC_BTN_DISABLE,331,161,50,14
+    COMBOBOX        IDC_COMBO_AXIS,26,56,48,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_POS1,81,56,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_POS2,127,56,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_POS3,173,56,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_VEL1,81,86,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_VEL3,173,86,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_VEL2,127,86,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_JOG_SPEED,133,134,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_LOG,283,209,252,41,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    CONTROL         "已确认报警、限位、急停及机械行程状态正常",IDC_CHECK_SAFE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,14,160,10
+    LTEXT           "轴号选择",IDC_STATIC,35,45,30,8
+    LTEXT           "1轴目标位置",IDC_STATIC,81,45,41,8
+    LTEXT           "2轴目标位置",IDC_STATIC,127,45,41,8
+    LTEXT           "3轴目标位置",IDC_STATIC,173,45,41,8
+    LTEXT           "1轴目标速度",IDC_STATIC,81,76,41,8
+    LTEXT           "2轴目标速度",IDC_STATIC,127,76,41,8
+    LTEXT           "3轴目标速度",IDC_STATIC,173,76,41,8
+    GROUPBOX        "控制器状态",IDC_STATIC,276,15,104,34
+    LTEXT           "控制器：未初始化",IDC_STATIC_CTRL_STATUS,279,25,59,8
+    LTEXT           "硬件状态：等待读取",IDC_STATIC_HW_STATUS,279,36,66,8
+    GROUPBOX        "三轴状态监控",IDC_STATIC,276,53,263,91
+    CONTROL         "",IDC_LIST_AXIS_STATUS,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,280,62,252,77
+    EDITTEXT        IDC_EDIT_ACC,219,56,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DEC,219,86,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_JOG_ACC,178,134,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_JOG_DEC,223,134,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HOME_ACC,205,183,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HOME_DEC,205,208,40,14,ES_AUTOHSCROLL
+    LTEXT           "点位加速度",IDC_STATIC,221,45,37,8
+    LTEXT           "点位减速度",IDC_STATIC,220,76,37,8
+    GROUPBOX        "控制与参数",IDC_STATIC,18,34,251,75
+    GROUPBOX        "JOG手动点动",IDC_STATIC,17,114,252,43
+    LTEXT           "JOG速度",IDC_STATIC,139,125,29,8
+    LTEXT           "JOG加速度",IDC_STATIC,180,125,36,8
+    LTEXT           "JOG减速度",IDC_STATIC,225,125,36,8
+    CONTROL         "自动滚动",IDC_CHECK_LOG_AUTOSCROLL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,429,198,45,10
+    PUSHBUTTON      "清空日志",IDC_BTN_CLEAR_LOG,474,195,50,14
+    GROUPBOX        "运行日志",IDC_STATIC,283,190,252,61
+    GROUPBOX        "伺服控制",IDC_STATIC,276,149,129,34
+    PUSHBUTTON      "回零",IDC_BTN_HOME,48,175,50,48
+    EDITTEXT        IDC_EDIT_HOME_HIGHVEL,159,183,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HOME_LOWVEL,159,208,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HOME_DIST,104,208,49,14,ES_AUTOHSCROLL
+    GROUPBOX        "HOME回零",IDC_STATIC,19,164,252,65
+    COMBOBOX        IDC_COMBO_HOME_DIR,104,182,48,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "搜索方向",IDC_STATIC,113,173,30,8
+    LTEXT           "搜索距离",IDC_STATIC,113,197,30,8
+    LTEXT           "回零高速",IDC_STATIC,164,173,30,8
+    LTEXT           "回零低速",IDC_STATIC,164,199,30,8
+    LTEXT           "回零加速度",IDC_STATIC,207,173,37,8
+    LTEXT           "回零减速度",IDC_STATIC,206,199,37,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TrapDemoMFC"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "TrapDemoMFC.exe"
+            VALUE "LegalCopyright", "TODO:  (C) <公司名>。  保留所有权利。"
+            VALUE "OriginalFilename", "TrapDemoMFC.exe"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_TRAPDEMOMFC_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 550
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 274
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_TRAPDEMOMFC_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ABOUTBOX            "关于 TrapDemoMFC(&A)..."
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#include "res\TrapDemoMFC.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "l.CHS\afxres.rc"      // 标准组件
+#if !defined(_AFXDLL)
+#include "l.CHS\afxribbon.rc"   // MFC 功能区和控制条资源
+#endif
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

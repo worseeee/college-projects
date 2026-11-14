@@ -1,0 +1,22 @@
+package jicheng;
+
+public class Animal {
+    String name;
+    private int age;
+    public final String COLOR="黑色";
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name=name;
+    }
+    public int getAge(){
+        return age;
+    }
+    public void setAge(int age){
+        this.age=age;
+    }
+    void shout(){
+        System.out.println("动物发出叫声");
+    }
+}
